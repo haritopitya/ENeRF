@@ -1,6 +1,7 @@
 # from inplace_abn import InPlaceABN
 import torch.nn as nn
 import torch
+import numpy
 from kornia.utils import create_meshgrid
 import torch.nn.functional as F
 from lib.config import cfg
@@ -46,7 +47,8 @@ def get_proj_mats(batch, src_scale, tar_scale):
     tar_ones = torch.zeros((B, 1, 4)).to(tar_projs.device)
     tar_ones[:, :, 3] = 1
     tar_projs = torch.cat((tar_projs, tar_ones), dim=1)
-    tar_projs_inv = torch.inverse(tar_projs)
+    tar_projs_inv = torch.from_numpy(numpy.linalg.inv(tar_projs.to('cpu').detach().numpy())).to('cuda')
+    # tar_projs_inv = torch.inverse(tar_projs)
 
     src_projs = src_projs.view(B, S_V, 3, 4)
     tar_projs_inv = tar_projs_inv.view(B, 1, 4, 4)
@@ -704,8 +706,11 @@ def get_img_feat(xyz, img_feat_rgb, batch, training, level):# B * N * S * (11+4)
         grid[..., 0], grid[..., 1] = (grid[..., 0]) / (W - 1), (grid[..., 1]) / (H - 1)
         grid = grid * 2. - 1.
         feat = F.grid_sample(img_feat_rgb[:, i], grid[:, None], align_corners=True, mode='bilinear', padding_mode='border').permute(0, 2, 3, 1)[:, 0]
-        tar_cam_xyz = batch['tar_ext'].inverse()[:, :3, 3]
-        src_cam_xyz = batch['src_exts'][:, i].inverse()[:, :3, 3]
+        # tar_cam_xyz = batch['tar_ext'].inverse()[:, :3, 3]
+        # src_cam_xyz = batch['src_exts'][:, i].inverse()[:, :3, 3]
+        tar_cam_xyz = torch.from_numpy(numpy.linalg.inv(batch['tar_ext'].to('cpu').detach().numpy())).to('cuda')[:, :3, 3]
+        src_cam_xyz = torch.from_numpy(numpy.linalg.inv(batch['src_exts'][:, i].to('cpu').detach().numpy())).to('cuda')[:, :3, 3]
+
         tar_diff = xyz[..., :3] - tar_cam_xyz[:, None]
         src_diff = xyz[..., :3] - src_cam_xyz[:, None]
 
