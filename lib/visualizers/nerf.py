@@ -14,8 +14,8 @@ class Visualizer:
         self.imgs = []
         self.depths = []
         self.imgs_coarse = []
-        os.system('mkdir -p {}'.format(cfg.result_dir))
-        os.system('mkdir -p {}'.format(cfg.result_dir + '/imgs'))
+        os.system('mkdir {}'.format(cfg.result_dir))
+        os.system('mkdir {}'.format(cfg.result_dir + '/imgs'))
 
     def visualize(self, output, batch):
         B, N_rays = batch['rays'].shape[:2]

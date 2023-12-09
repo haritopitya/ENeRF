@@ -388,7 +388,7 @@ def load_model(net,
 
 
 def save_model(net, optim, scheduler, recorder, model_dir, epoch, last=False):
-    os.system('mkdir -p {}'.format(model_dir))
+    os.system('mkdir {}'.format(model_dir))
     model = {
         'net': net.state_dict(),
         'optim': optim.state_dict(),
@@ -485,7 +485,7 @@ def remove_net_layer(net, layers):
 def save_trained_config(cfg):
     if not cfg.resume:
         os.system('rm -rf ' + cfg.trained_config_dir+'/*')
-    os.system('mkdir -p ' + cfg.trained_config_dir)
+    os.system('mkdir ' + cfg.trained_config_dir)
     train_cmd = ' '.join(sys.argv)
     train_cmd_path = os.path.join(cfg.trained_config_dir, 'train_cmd.txt')
     train_config_path = os.path.join(cfg.trained_config_dir, 'train_config.yaml')
@@ -513,7 +513,7 @@ def load_pretrain(net, model_dir):
 
 def save_pretrain(net, task, model_dir):
     model_dir = os.path.join('data/trained_model', task, model_dir)
-    os.system('mkdir -p ' +  model_dir)
+    os.system('mkdir ' +  model_dir)
     model = {'net': net.state_dict()}
     torch.save(model, os.path.join(model_dir, 'latest.pth'))
 

@@ -33,7 +33,7 @@ class Evaluator:
             self.mvs_abs = []
             self.mvs_acc_2 = []
             self.mvs_acc_10 = []
-        os.system('mkdir -p ' + cfg.result_dir)
+        os.system('mkdir ' + cfg.result_dir)
 
     def evaluate(self, output, batch):
         B, S, _, H, W = batch['src_inps'].shape
