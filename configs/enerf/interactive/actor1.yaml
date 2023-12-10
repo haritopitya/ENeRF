@@ -1,8 +1,13 @@
-parent_cfg: 'configs/enerf/enerf_outdoor/actor1.yaml'
+parent_cfg: "configs/enerf/enerf_outdoor/actor1.yaml"
 visualizer_module: lib.visualizers.enerf_interactive
 train_dataset_module: lib.datasets.enerf_outdoor.enerf_interactive
 test_dataset_module: lib.datasets.enerf_outdoor.enerf_interactive
 
+enerf:
+    test_input_views: 3
+    cas_config:
+        render_if: [False, True]
+
 test_dataset:
-    frames: [0, 1000, 250] # Render frames
-    input_ratio: 0.5
+    frames: [0, 1000, 600] # Render frames
+    input_ratio: 1.
