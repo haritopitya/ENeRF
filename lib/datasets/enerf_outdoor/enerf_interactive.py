@@ -80,6 +80,7 @@ class Dataset:
         points = np.array(trimesh.load(join(scene_root, 'background.ply')).vertices)
         scene_info['bbox_dynamic'] = points
         self.bkgd_near_far = []
+        self.ixts=[]
         for view_id in range(len(cam_ids)):
             img, ext, ixt = self.read_data(view_id, 0)
             h, w = img.shape[:2]
@@ -91,16 +92,15 @@ class Dataset:
             mask = np.logical_or(mask, uv[..., 1] > h - 1)
             uv = uv[mask == False]
             near_far = np.array([uv[:, 2].min(), uv[:, 2].max()])
+            self.ixts.append(ixt)
             self.bkgd_near_far.append(near_far)
 
         self.bkgd_near_far = np.array(self.bkgd_near_far)
 
-        self.ixts = np.array(scene_info['ixts']).copy()
         self.exts = np.array(scene_info['exts'])
         self.cam_points = np.linalg.inv(self.exts)[:, :3, 3].astype(np.float32)
         self.cam_dirs = np.linalg.inv(self.exts)[:, :3, :3].astype(np.float32)
 
-        self.ixts[:, :2] *= self.input_ratio
         self.ixt = np.mean(self.ixts, axis=0).astype(np.float32)
 
         # self.input_h_w = (np.array([1920, 1080]) * self.input_ratio).astype(np.uint32).tolist()#
