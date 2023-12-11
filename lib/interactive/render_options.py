@@ -19,6 +19,8 @@ if cfg.test_dataset.scene == 'taekwondo' or cfg.test_dataset.scene == 'walking':
     opt.window_hw = [320, 640]
 elif 'cook' in cfg.test_dataset.scene or 'flame' in cfg.test_dataset.scene or 'coffee' in cfg.test_dataset.scene:
     opt.window_hw = [448, 640]
+elif 'actor1' in cfg.test_dataset.scene:
+    opt.window_hw = [768,1024]
 else:
     opt.window_hw = [512, 512]
 # opt.window_hw = 512, 512
