@@ -9,5 +9,5 @@ enerf:
         render_if: [False, True]
 
 test_dataset:
-    frames: [0, 1000, 600] # Render frames
+    frames: [0, 1000, 40] # Render frames
     input_ratio: 1.
