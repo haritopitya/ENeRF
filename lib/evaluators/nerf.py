@@ -18,7 +18,7 @@ class Evaluator:
     def __init__(self,):
         self.psnrs = []
         self.psnrs_0 = []
-        os.system('mkdir ' + cfg.result_dir)
+        os.system('mkdir -p ' + cfg.result_dir)
 
     def evaluate(self, output, batch):
         B, N_rays = batch['rays'].shape[:2]

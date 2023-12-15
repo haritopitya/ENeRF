@@ -24,7 +24,7 @@ class Evaluator:
         self.scene_lpips = {}
         self.loss_fn_vgg = lpips.LPIPS(net='vgg')
         self.loss_fn_vgg.cuda()
-        os.system('mkdir ' + cfg.result_dir)
+        os.system('mkdir -p ' + cfg.result_dir)
 
     def evaluate(self, output, batch):
         B, S, _, H, W = batch['src_inps'].shape
