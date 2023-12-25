@@ -438,8 +438,8 @@ def sample_along_depth(rays, N_samples, level):
     else:
         d = (z_vals - near) / torch.clamp_min(far - near, 1e-6)
     uvd = torch.cat([uv[..., None, :].repeat(1, 1, N_samples, 1), d[..., None]], dim=-1)
-    if z_vals.max() > 1e5:
-        __import__('ipdb').set_trace()
+    # if z_vals.max() > 1e5:
+    #     __import__('ipdb').set_trace()
     return world_xyz, uvd, z_vals
 
 def get_norm_space(xyd, feature_volume, batch, N_samples, rays, rgbs, training):
