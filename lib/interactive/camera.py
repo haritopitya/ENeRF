@@ -119,7 +119,8 @@ class Camera:
     def update_from_cam_path(self):
         self.center = glm.vec3(*flatten_inner_dim(interpolate.splev(self.cam_path_u, self.center_tck)))
         self.v_front = glm.normalize(glm.vec3(*flatten_inner_dim(interpolate.splev(self.cam_path_u, self.front_tck))))
-        self.v_world_up = glm.normalize(glm.vec3(*flatten_inner_dim(interpolate.splev(self.cam_path_u, self.worldup_tck))))
+        # self.v_world_up = glm.normalize(glm.vec3(*flatten_inner_dim(interpolate.splev(self.cam_path_u, self.worldup_tck))))
+        self.v_world_up = glm.vec3(0.,0.,1.)
         self.update_trans()
 
     def drag_update(self, x, y):
