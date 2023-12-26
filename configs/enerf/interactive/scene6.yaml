@@ -1,0 +1,13 @@
+parent_cfg: "configs/enerf/soccer/scene6.yaml"
+visualizer_module: lib.visualizers.enerf_interactive
+train_dataset_module: lib.datasets.soccer.enerf_interactive
+test_dataset_module: lib.datasets.soccer.enerf_interactive
+
+enerf:
+    test_input_views: 3
+    cas_config:
+        render_if: [False, True]
+
+test_dataset:
+    frames: [3710, 3950 , 10] # Render frames
+    input_ratio: 1.
