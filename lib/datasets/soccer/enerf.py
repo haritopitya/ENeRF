@@ -61,16 +61,17 @@ class Dataset:
         self.scene_info = scene_info
 
         for frame_id in tqdm(np.arange(frame_len)[b:e:s]):
+            xmin=-7.0;ymin=-1.0;zmax=11.0;xmax=25.0;ymax=1.0;zmin=-18
             corners_3d =  np.array([
-                [-5.0, -2.0, 0.0],
-                [-5.0, -2.0, 60.0],
-                [-5.0, 0.0, 0.0],
-                [-5.0, 0.0, 60.0],
-                [45.0, -2.0, 0.0],
-                [45.0, -2.0, 60.0],
-                [45.0, 0.0, 0.0],
-                [45.0, 0.0, 60.0],
-            ])/1000
+                [xmin, ymin, zmin],
+                [xmin, ymin, zmax],
+                [xmin, ymax, zmin],
+                [xmin, ymax, zmax],
+                [xmax, ymin, zmin],
+                [xmax, ymin, zmax],
+                [xmax, ymax, zmin],
+                [xmax, ymax, zmax],
+            ])
             scene_info['bbox'][frame_id] = corners_3d
 
         points = np.array(trimesh.load(os.path.join(scene_root, 'background.ply')).vertices)
